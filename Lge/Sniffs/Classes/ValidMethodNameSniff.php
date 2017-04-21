@@ -55,7 +55,7 @@ class Lge_Sniffs_Classes_ValidMethodNameSniff extends PHP_CodeSniffer_Standards_
             $magicPart = strtolower(substr($methodName, 2));
             if (in_array($magicPart, $this->magicMethods) === false) {
                  $error = 'Method name "%s" is invalid; only PHP magic methods should be prefixed with a double underscore';
-                 $phpcsFile->addError($error, $stackPtr, 'MethodDoubleUnderscore', $errorData);
+                 $phpcsFile->addError($error, $stackPtr, 'MethodDoubleUnderscore');
             }
 
             return;
@@ -65,28 +65,27 @@ class Lge_Sniffs_Classes_ValidMethodNameSniff extends PHP_CodeSniffer_Standards_
         $public = false;
         if (empty($prev)) {
             $error = 'Method must be defined its scope using public,private or protected';
-            $phpcsFile->addError($error, $stackPtr, 'MethodScope', $errorData);
+            $phpcsFile->addError($error, $stackPtr, 'MethodScope');
         } else {
             $public = ($tokens[$prev]['code'] == T_PUBLIC);
             if ($methodName[0] == '_' && $tokens[$prev]['code'] == T_PUBLIC) {
                 $error = 'Method name with underscore prefix must be defined its scope using private or protected';
-                $phpcsFile->addError($error, $stackPtr, 'MethodScope', $errorData);
+                $phpcsFile->addError($error, $stackPtr, 'MethodScope');
             } else if(in_array($tokens[$prev]['code'], array(T_PRIVATE, T_PROTECTED)) && $methodName[0] != '_') {
                 $error = 'Private or protected method must be defined its name with underscore prefix';
-                $phpcsFile->addError($error, $stackPtr, 'MethodScope', $errorData);
+                $phpcsFile->addError($error, $stackPtr, 'MethodScope');
+            } else {
+                $valid = PHP_CodeSniffer::isCamelCaps($methodName, false, $public, false);
+                if ($valid === false) {
+                    $type  = lcfirst($methodName);
+                    $error = '%s name "%s" is not in camel caps format';
+                    $data  = array(
+                        $type,
+                        $methodName,
+                    );
+                    $phpcsFile->addError($error, $stackPtr, 'NotCamelCaps', $data);
+                }
             }
-        }
-
-        $valid = PHP_CodeSniffer::isCamelCaps($methodName, false, $public, false);
-
-        if ($valid === false) {
-            $type  = lcfirst($methodName);
-            $error = '%s name "%s" is not in camel caps format';
-            $data  = array(
-                      $type,
-                      $methodName,
-                     );
-            $phpcsFile->addError($error, $stackPtr, 'NotCamelCaps', $data);
         }
 
         $visibility = 0;

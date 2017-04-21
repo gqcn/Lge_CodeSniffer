@@ -1,6 +1,6 @@
 <?php
-if (class_exists('PHP_CodeSniffer_CommentParser_FunctionCommentParser', true) === false) {
-    $error = 'Class PHP_CodeSniffer_CommentParser_FunctionCommentParser not found';
+if (class_exists('Lge_Sniffs_CommentParser_FunctionCommentParser', true) === false) {
+    $error = 'Class Lge_Sniffs_CommentParser_FunctionCommentParser not found';
     throw new PHP_CodeSniffer_Exception($error);
 }
 
@@ -147,9 +147,9 @@ class Lge_Sniffs_Commenting_FunctionCommentSniff implements PHP_CodeSniffer_Snif
         $this->_methodName = $phpcsFile->getDeclarationName($stackPtr);
 
         try {
-            $this->commentParser = new PHP_CodeSniffer_CommentParser_FunctionCommentParser($commentString, $phpcsFile);
+            $this->commentParser = new Lge_Sniffs_CommentParser_FunctionCommentParser($commentString, $phpcsFile);
             $this->commentParser->parse();
-        } catch (PHP_CodeSniffer_CommentParser_ParserException $e) {
+        } catch (Lge_Sniffs_CommentParser_ParserException $e) {
             $line = ($e->getLineWithinComment() + $commentStart);
             $phpcsFile->addError($e->getMessage(), $line, 'FailedParse');
             return;

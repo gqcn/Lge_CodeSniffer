@@ -23,13 +23,7 @@ class Lge_Sniffs_Classes_PropertyDeclarationSniff extends PHP_CodeSniffer_Standa
     protected function processMemberVar(PHP_CodeSniffer_File $phpcsFile, $stackPtr)
     {
         $tokens = $phpcsFile->getTokens();
-        /*
-        if ($tokens[$stackPtr]['content'][1] === '_') {
-            $error = 'Property name "%s" should not be prefixed with an underscore to indicate visibility';
-            $data  = array($tokens[$stackPtr]['content']);
-            $phpcsFile->addWarning($error, $stackPtr, 'Underscore', $data);
-        }
-		*/
+
         // Detect multiple properties defined at the same time. Throw an error
         // for this, but also only process the first property in the list so we don't
         // repeat errors.
@@ -39,10 +33,23 @@ class Lge_Sniffs_Classes_PropertyDeclarationSniff extends PHP_CodeSniffer_Standa
         if ($tokens[$prev]['code'] === T_VARIABLE) {
             return;
         }
-
         if ($tokens[$prev]['code'] === T_VAR) {
             $error = 'The var keyword must not be used to declare a property';
             $phpcsFile->addError($error, $stackPtr, 'VarUsed');
+        }
+
+        /**
+         * 变量名称下划线判断.
+         */
+        if ($tokens[$prev]['code'] === T_PUBLIC && $tokens[$stackPtr]['content'][1] === '_') {
+            $error = 'Public property "%s" should not be prefixed with an underscore to indicate visibility';
+            $data  = array($tokens[$stackPtr]['content']);
+            $phpcsFile->addWarning($error, $stackPtr, 'Underscore', $data);
+        } elseif (in_array($tokens[$prev]['code'], array(T_PRIVATE, T_PROTECTED)) && $tokens[$stackPtr]['content'][1] !== '_') {
+            $visibilityStr = ($tokens[$prev]['code'] == T_PRIVATE) ? 'Private' : 'Protected';
+            $error = "{$visibilityStr} property \"%s\" should be prefixed with an underscore to indicate visibility";
+            $data  = array($tokens[$stackPtr]['content']);
+            $phpcsFile->addWarning($error, $stackPtr, 'Underscore', $data);
         }
 
         $next = $phpcsFile->findNext(array(T_VARIABLE, T_SEMICOLON), ($stackPtr + 1));
@@ -92,5 +99,3 @@ class Lge_Sniffs_Classes_PropertyDeclarationSniff extends PHP_CodeSniffer_Standa
 
 
 }//end class
-
-?>

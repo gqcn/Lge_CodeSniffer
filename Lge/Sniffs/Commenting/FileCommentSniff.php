@@ -1,6 +1,6 @@
 <?php
-if (class_exists('PHP_CodeSniffer_CommentParser_ClassCommentParser', true) === false) {
-    throw new PHP_CodeSniffer_Exception('Class PHP_CodeSniffer_CommentParser_ClassCommentParser not found');
+if (class_exists('Lge_Sniffs_CommentParser_ClassCommentParser', true) === false) {
+    throw new PHP_CodeSniffer_Exception('Class Lge_Sniffs_CommentParser_ClassCommentParser not found');
 }
 
 class Lge_Sniffs_Commenting_FileCommentSniff implements PHP_CodeSniffer_Sniff
@@ -136,9 +136,9 @@ class Lge_Sniffs_Commenting_FileCommentSniff implements PHP_CodeSniffer_Sniff
 
         // Parse the header comment docblock.
         try {
-            $this->commentParser = new PHP_CodeSniffer_CommentParser_ClassCommentParser($commentString, $phpcsFile);
+            $this->commentParser = new Lge_Sniffs_CommentParser_ClassCommentParser($commentString, $phpcsFile);
             $this->commentParser->parse();
-        } catch (PHP_CodeSniffer_CommentParser_ParserException $e) {
+        } catch (Lge_Sniffs_CommentParser_ParserException $e) {
             $line = ($e->getLineWithinComment() + $commentStart);
             $phpcsFile->addError($e->getMessage(), $line, 'Exception');
             return;
@@ -354,17 +354,17 @@ class Lge_Sniffs_Commenting_FileCommentSniff implements PHP_CodeSniffer_Sniff
      * Get the indentation information of each tag.
      *
      * @param string                                   $tagName    The name of the doc comment element.
-     * @param PHP_CodeSniffer_CommentParser_DocElement $tagElement The doc comment element.
+     * @param Lge_Sniffs_CommentParser_DocElement $tagElement The doc comment element.
      *
      * @return void
      */
     protected function getIndentation($tagName, $tagElement)
     {
-        if ($tagElement instanceof PHP_CodeSniffer_CommentParser_SingleElement) {
+        if ($tagElement instanceof Lge_Sniffs_CommentParser_SingleElement) {
             if ($tagElement->getContent() !== '') {
                 return (strlen($tagName) + substr_count($tagElement->getWhitespaceBeforeContent(), ' '));
             }
-        } else if ($tagElement instanceof PHP_CodeSniffer_CommentParser_PairElement) {
+        } else if ($tagElement instanceof Lge_Sniffs_CommentParser_PairElement) {
             if ($tagElement->getValue() !== '') {
                 return (strlen($tagName) + substr_count($tagElement->getWhitespaceBeforeValue(), ' '));
             }
