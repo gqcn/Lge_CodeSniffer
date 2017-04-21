@@ -1,6 +1,6 @@
 <?php
 
-class ECWise_Sniffs_Commenting_InlineCommentSniff implements PHP_CodeSniffer_Sniff
+class Lge_Sniffs_Commenting_InlineCommentSniff implements PHP_CodeSniffer_Sniff
 {
     /**
      * Returns the token types that this sniff is interested in.

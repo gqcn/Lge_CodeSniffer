@@ -4,7 +4,7 @@ if (class_exists('PHP_CodeSniffer_CommentParser_FunctionCommentParser', true) ==
     throw new PHP_CodeSniffer_Exception($error);
 }
 
-class ECWise_Sniffs_Commenting_FunctionCommentSniff implements PHP_CodeSniffer_Sniff
+class Lge_Sniffs_Commenting_FunctionCommentSniff implements PHP_CodeSniffer_Sniff
 {
 
     /**

@@ -3,7 +3,7 @@ if (class_exists('PHP_CodeSniffer_CommentParser_ClassCommentParser', true) === f
     throw new PHP_CodeSniffer_Exception('Class PHP_CodeSniffer_CommentParser_ClassCommentParser not found');
 }
 
-class ECWise_Sniffs_Commenting_FileCommentSniff implements PHP_CodeSniffer_Sniff
+class Lge_Sniffs_Commenting_FileCommentSniff implements PHP_CodeSniffer_Sniff
 {
 
     /**
@@ -457,7 +457,7 @@ class ECWise_Sniffs_Commenting_FileCommentSniff implements PHP_CodeSniffer_Sniff
 
 
     /**
-     * Author tag must be 'Xxx Yyyy<yyyx@ecwise.com>'.
+     * Author tag must be 'Xxx Yyyy<yyyx@Lge.com>'.
      *
      * @param int $errorPos The line number where the error occurs.
      *
@@ -474,8 +474,8 @@ class ECWise_Sniffs_Commenting_FileCommentSniff implements PHP_CodeSniffer_Sniff
                 $this->currentFile->addError($error, $errorPos, 'MissingAuthor');
             }
             /*
-            else if ( ! preg_match('%^.*\<[a-z0-9]+\@ecwise\.com\>$%', $content) ) {
-                $error = 'Expected "Xxx Yyy<yyyx@ecwise.com>" for author tag';
+            else if ( ! preg_match('%^.*\<[a-z0-9]+\@Lge\.com\>$%', $content) ) {
+                $error = 'Expected "Xxx Yyy<yyyx@Lge.com>" for author tag';
                 $this->currentFile->addError($error, $errorPos, 'IncorrectAuthor');
             }
             */
