@@ -192,6 +192,6 @@
     <!-- 文档注释 -->
     <rule ref="Lge.Commenting.FileComment" />
     <rule ref="Lge.Commenting.FunctionComment" />
-    <rule ref="Squiz.Commenting.FunctionCommentThrowTag" />
-    <rule ref="Squiz.Commenting.ClassComment" />
+    <rule ref="Lge.Commenting.FunctionCommentThrowTag" />
+    <rule ref="Lge.Commenting.ClassComment" />
 </ruleset>

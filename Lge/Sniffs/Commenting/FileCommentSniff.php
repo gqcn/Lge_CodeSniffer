@@ -205,10 +205,12 @@ class Lge_Sniffs_Commenting_FileCommentSniff implements PHP_CodeSniffer_Sniff
             $phpcsFile->addError($error, ($commentStart + 1), 'MissingShort');
         } else {
             $lastChar  = $testShort[(strlen($testShort) - 1)];
+            /*
             if (substr_count($testShort, $phpcsFile->eolChar) !== 0) {
                 $error = 'File comment short description must be on a single line';
                 $phpcsFile->addError($error, ($commentStart + 1), 'ShortSingleLine');
             }
+            */
         }//end if
 
         // Check each tag.
