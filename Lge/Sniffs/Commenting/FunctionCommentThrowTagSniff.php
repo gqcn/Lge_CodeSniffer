@@ -1,39 +1,10 @@
 <?php
-/**
- * Verifies that a @throws tag exists for a function that throws exceptions.
- * Verifies the number of @throws tags and the number of throw tokens matches.
- * Verifies the exception type.
- *
- * PHP version 5
- *
- * @category  PHP
- * @package   PHP_CodeSniffer
- * @author    Greg Sherwood <gsherwood@squiz.net>
- * @author    Marc McIntyre <mmcintyre@squiz.net>
- * @copyright 2006-2014 Squiz Pty Ltd (ABN 77 084 670 600)
- * @license   https://github.com/squizlabs/PHP_CodeSniffer/blob/master/licence.txt BSD Licence
- * @link      http://pear.php.net/package/PHP_CodeSniffer
- */
 
 if (class_exists('PHP_CodeSniffer_Standards_AbstractScopeSniff', true) === false) {
     $error = 'Class PHP_CodeSniffer_Standards_AbstractScopeSniff not found';
     throw new PHP_CodeSniffer_Exception($error);
 }
 
-/**
- * Verifies that a @throws tag exists for a function that throws exceptions.
- * Verifies the number of @throws tags and the number of throw tokens matches.
- * Verifies the exception type.
- *
- * @category  PHP
- * @package   PHP_CodeSniffer
- * @author    Greg Sherwood <gsherwood@squiz.net>
- * @author    Marc McIntyre <mmcintyre@squiz.net>
- * @copyright 2006-2014 Squiz Pty Ltd (ABN 77 084 670 600)
- * @license   https://github.com/squizlabs/PHP_CodeSniffer/blob/master/licence.txt BSD Licence
- * @version   Release: 1.5.5
- * @link      http://pear.php.net/package/PHP_CodeSniffer
- */
 class Lge_Sniffs_Commenting_FunctionCommentThrowTagSniff extends PHP_CodeSniffer_Standards_AbstractScopeSniff
 {
 
@@ -68,48 +39,31 @@ class Lge_Sniffs_Commenting_FunctionCommentThrowTagSniff extends PHP_CodeSniffer
 
         $tokens = $phpcsFile->getTokens();
 
-        $find = array(
-                 T_COMMENT,
-                 T_DOC_COMMENT,
-                 T_CLASS,
-                 T_FUNCTION,
-                 T_OPEN_TAG,
-                );
+        $find   = PHP_CodeSniffer_Tokens::$methodPrefixes;
+        $find[] = T_WHITESPACE;
 
-        $commentEnd = $phpcsFile->findPrevious($find, ($currScope - 1));
-
-        if ($commentEnd === false) {
+        $commentEnd = $phpcsFile->findPrevious($find, ($currScope - 1), null, true);
+        if ($tokens[$commentEnd]['code'] === T_COMMENT) {
+            // Function is using the wrong type of comment.
             return;
         }
 
-        if ($tokens[$commentEnd]['code'] !== T_DOC_COMMENT) {
-            // Function doesn't have a comment. Let someone else warn about that.
+        if ($tokens[$commentEnd]['code'] !== T_DOC_COMMENT_CLOSE_TAG
+            && $tokens[$commentEnd]['code'] !== T_COMMENT
+        ) {
+            // Function doesn't have a doc comment.
             return;
         }
 
-        $commentStart = ($phpcsFile->findPrevious(T_DOC_COMMENT, ($commentEnd - 1), null, true) + 1);
-        $comment      = $phpcsFile->getTokensAsString($commentStart, ($commentEnd - $commentStart + 1));
-
-        try {
-            $this->commentParser = new PHP_CodeSniffer_CommentParser_FunctionCommentParser($comment, $phpcsFile);
-            $this->commentParser->parse();
-        } catch (PHP_CodeSniffer_CommentParser_ParserException $e) {
-            $line = ($e->getLineWithinComment() + $commentStart);
-            $phpcsFile->addError($e->getMessage(), $line, 'FailedParse');
-            return;
-        }
-
-        // Find the position where the current function scope ends.
-        $currScopeEnd = 0;
-        if (isset($tokens[$currScope]['scope_closer']) === true) {
-            $currScopeEnd = $tokens[$currScope]['scope_closer'];
-        }
+        $currScopeEnd = $tokens[$currScope]['scope_closer'];
 
         // Find all the exception type token within the current scope.
         $throwTokens = array();
         $currPos     = $stackPtr;
-        if ($currScopeEnd !== 0) {
-            while ($currPos < $currScopeEnd && $currPos !== false) {
+        $foundThrows = false;
+        while ($currPos < $currScopeEnd && $currPos !== false) {
+            if ($phpcsFile->hasCondition($currPos, T_CLOSURE) === false) {
+                $foundThrows = true;
 
                 /*
                     If we can't find a NEW, we are probably throwing
@@ -152,64 +106,69 @@ class Lge_Sniffs_Commenting_FunctionCommentThrowTagSniff extends PHP_CodeSniffer
                         }
                     }//end if
                 }//end if
+            }//end if
 
-                $currPos = $phpcsFile->findNext(T_THROW, ($currPos + 1), $currScopeEnd);
-            }//end while
-        }//end if
+            $currPos = $phpcsFile->findNext(T_THROW, ($currPos + 1), $currScopeEnd);
+        }//end while
+
+        if ($foundThrows === false) {
+            return;
+        }
 
         // Only need one @throws tag for each type of exception thrown.
         $throwTokens = array_unique($throwTokens);
-        sort($throwTokens);
 
-        $throws = $this->commentParser->getThrows();
-        if (empty($throws) === true) {
+        $throwTags    = array();
+        $commentStart = $tokens[$commentEnd]['comment_opener'];
+        foreach ($tokens[$commentStart]['comment_tags'] as $tag) {
+            if ($tokens[$tag]['content'] !== '@throws') {
+                continue;
+            }
+
+            if ($tokens[($tag + 2)]['code'] === T_DOC_COMMENT_STRING) {
+                $exception = $tokens[($tag + 2)]['content'];
+                $space     = strpos($exception, ' ');
+                if ($space !== false) {
+                    $exception = substr($exception, 0, $space);
+                }
+
+                $throwTags[$exception] = true;
+            }
+        }
+
+        if (empty($throwTags) === true) {
             $error = 'Missing @throws tag in function comment';
             $phpcsFile->addError($error, $commentEnd, 'Missing');
+            return;
         } else if (empty($throwTokens) === true) {
             // If token count is zero, it means that only variables are being
             // thrown, so we need at least one @throws tag (checked above).
             // Nothing more to do.
             return;
-        } else {
-            $throwTags  = array();
-            $lineNumber = array();
-            foreach ($throws as $throw) {
-                $throwTags[]                    = $throw->getValue();
-                $lineNumber[$throw->getValue()] = $throw->getLine();
-            }
+        }
 
-            $throwTags = array_unique($throwTags);
-            sort($throwTags);
+        // Make sure @throws tag count matches throw token count.
+        $tokenCount = count($throwTokens);
+        $tagCount   = count($throwTags);
+        if ($tokenCount !== $tagCount) {
+            $error = 'Expected %s @throws tag(s) in function comment; %s found';
+            $data  = array(
+                      $tokenCount,
+                      $tagCount,
+                     );
+            $phpcsFile->addError($error, $commentEnd, 'WrongNumber', $data);
+            return;
+        }
 
-            // Make sure @throws tag count matches throw token count.
-            $tokenCount = count($throwTokens);
-            $tagCount   = count($throwTags);
-            if ($tokenCount !== $tagCount) {
-                $error = 'Expected %s @throws tag(s) in function comment; %s found';
-                $data  = array(
-                          $tokenCount,
-                          $tagCount,
-                         );
-                $phpcsFile->addError($error, $commentEnd, 'WrongNumber', $data);
-                return;
-            } else {
-                // Exception type in @throws tag must be thrown in the function.
-                foreach ($throwTags as $i => $throwTag) {
-                    $errorPos = ($commentStart + $lineNumber[$throwTag]);
-                    if (empty($throwTag) === false && $throwTag !== $throwTokens[$i]) {
-                        $error = 'Expected "%s" but found "%s" for @throws tag exception';
-                        $data  = array(
-                                  $throwTokens[$i],
-                                  $throwTag,
-                                 );
-                        $phpcsFile->addError($error, $errorPos, 'WrongType', $data);
-                    }
-                }
+        foreach ($throwTokens as $throw) {
+            if (isset($throwTags[$throw]) === false) {
+                $error = 'Missing @throws tag for "%s" exception';
+                $data  = array($throw);
+                $phpcsFile->addError($error, $commentEnd, 'Missing', $data);
             }
-        }//end if
+        }
 
     }//end processTokenWithinScope()
 
 
 }//end class
-?>
