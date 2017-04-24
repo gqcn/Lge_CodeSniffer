@@ -1,5 +1,5 @@
 # 安装与配置
-1、[Lge_CodeSniffer/PHPCodeSniffer的安装配置使用(Windows)](http://johng.cn/lge-codesniffer-windows/)
+1、[Lge_CodeSniffer/PHP_CodeSniffer的安装配置使用(Windows)](http://johng.cn/lge-codesniffer-windows/)
 
 2、[Lge_CodeSniffer/PHP_CodeSniffer的安装配置使用(Linux)](http://johng.cn/lge-codesniffer-configuration/)
 
