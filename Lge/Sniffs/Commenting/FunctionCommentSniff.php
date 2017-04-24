@@ -369,7 +369,9 @@ class Lge_Sniffs_Commenting_FunctionCommentSniff extends PEAR_Sniffs_Commenting_
                     $suggestedTypeHint = 'callable';
                 } else if (in_array($typeName, PHP_CodeSniffer::$allowedTypes) === false) {
                     $suggestedTypeHint = $suggestedName;
-                } else if ($this->_phpVersion >= 70000) {
+                }
+                /*
+                else if ($this->_phpVersion >= 70000) {
                     if ($typeName === 'string') {
                         $suggestedTypeHint = 'string';
                     } else if ($typeName === 'int' || $typeName === 'integer') {
@@ -380,6 +382,7 @@ class Lge_Sniffs_Commenting_FunctionCommentSniff extends PEAR_Sniffs_Commenting_
                         $suggestedTypeHint = 'bool';
                     }
                 }
+                */
 
                 if ($suggestedTypeHint !== '' && isset($realParams[$pos]) === true) {
                     $typeHint = $realParams[$pos]['type_hint'];
