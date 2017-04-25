@@ -44,12 +44,12 @@ class Lge_Sniffs_Classes_PropertyDeclarationSniff extends PHP_CodeSniffer_Standa
         if ($tokens[$prev]['code'] === T_PUBLIC && $tokens[$stackPtr]['content'][1] === '_') {
             $error = 'Public property "%s" should not be prefixed with an underscore to indicate visibility';
             $data  = array($tokens[$stackPtr]['content']);
-            $phpcsFile->addWarning($error, $stackPtr, 'Underscore', $data);
+            $phpcsFile->addError($error, $stackPtr, 'PublicHasUnderscore', $data);
         } elseif (in_array($tokens[$prev]['code'], array(T_PRIVATE, T_PROTECTED)) && $tokens[$stackPtr]['content'][1] !== '_') {
             $visibilityStr = ($tokens[$prev]['code'] == T_PRIVATE) ? 'Private' : 'Protected';
             $error = "{$visibilityStr} property \"%s\" should be prefixed with an underscore to indicate visibility";
             $data  = array($tokens[$stackPtr]['content']);
-            $phpcsFile->addWarning($error, $stackPtr, 'Underscore', $data);
+            $phpcsFile->addError($error, $stackPtr, 'PrivateNoUnderscore', $data);
         }
 
         $next = $phpcsFile->findNext(array(T_VARIABLE, T_SEMICOLON), ($stackPtr + 1));

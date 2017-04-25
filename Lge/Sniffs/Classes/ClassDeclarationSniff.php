@@ -1,18 +1,26 @@
 <?php
+/**
+ * Lge_Sniffs_Classes_ClassDeclarationSniff
+ *
+ * @author john
+ */
+
 if (class_exists('PSR2_Sniffs_Classes_ClassDeclarationSniff', true) === false) {
     $error = 'Class PSR2_Sniffs_Classes_ClassDeclarationSniff not found';
     throw new PHP_CodeSniffer_Exception($error);
 }
 
+/**
+ * Class Lge_Sniffs_Classes_ClassDeclarationSniff
+ */
 class Lge_Sniffs_Classes_ClassDeclarationSniff extends PSR2_Sniffs_Classes_ClassDeclarationSniff
 {
-
 
     /**
      * Processes this test, when one of its tokens is encountered.
      *
      * @param PHP_CodeSniffer_File $phpcsFile The file being scanned.
-     * @param int                  $stackPtr  The position of the current token
+     * @param integer              $stackPtr  The position of the current token
      *                                         in the stack passed in $tokens.
      *
      * @return void
@@ -32,14 +40,13 @@ class Lge_Sniffs_Classes_ClassDeclarationSniff extends PSR2_Sniffs_Classes_Class
             $phpcsFile->addError($error, $nextClass, 'MultipleClasses');
         }
 
-    }//end process()
-
+    }
     
     /**
      * Processes the opening section of a class declaration.
      *
      * @param PHP_CodeSniffer_File $phpcsFile The file being scanned.
-     * @param int                  $stackPtr  The position of the current token
+     * @param integer              $stackPtr  The position of the current token
      *                                        in the stack passed in $tokens.
      *
      * @return void
@@ -68,16 +75,15 @@ class Lge_Sniffs_Classes_ClassDeclarationSniff extends PSR2_Sniffs_Classes_Class
                     }
                 }
             }
-        }//end if
+        }
 
-    }//end processOpen()
-
+    }
 
     /**
      * Processes the closing section of a class declaration.
      *
      * @param PHP_CodeSniffer_File $phpcsFile The file being scanned.
-     * @param int                  $stackPtr  The position of the current token
+     * @param integer              $stackPtr  The position of the current token
      *                                        in the stack passed in $tokens.
      *
      * @return void
@@ -136,10 +142,6 @@ class Lge_Sniffs_Classes_ClassDeclarationSniff extends PSR2_Sniffs_Classes_Class
             $data  = array($tokens[$stackPtr]['content']);
             $phpcsFile->addError($error, $closeBrace, 'CloseBraceSameLine', $data);
         }
+    }
 
-    }//end processClose()
-
-
-}//end class
-
-?>
+}

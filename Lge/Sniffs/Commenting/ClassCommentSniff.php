@@ -1,8 +1,14 @@
 <?php
+/**
+ * Lge_Sniffs_Commenting_ClassCommentSniff
+ * @author john
+ */
 
+/**
+ * Class Lge_Sniffs_Commenting_ClassCommentSniff
+ */
 class Lge_Sniffs_Commenting_ClassCommentSniff implements PHP_CodeSniffer_Sniff
 {
-
 
     /**
      * Returns an array of tokens this test wants to listen for.
@@ -13,14 +19,13 @@ class Lge_Sniffs_Commenting_ClassCommentSniff implements PHP_CodeSniffer_Sniff
     {
         return array(T_CLASS);
 
-    }//end register()
-
+    }
 
     /**
      * Processes this test, when one of its tokens is encountered.
      *
      * @param PHP_CodeSniffer_File $phpcsFile The file being scanned.
-     * @param int                  $stackPtr  The position of the current token
+     * @param integer              $stackPtr  The position of the current token
      *                                        in the stack passed in $tokens.
      *
      * @return void
@@ -59,7 +64,6 @@ class Lge_Sniffs_Commenting_ClassCommentSniff implements PHP_CodeSniffer_Sniff
             $phpcsFile->addWarning($error, $tag, 'TagNotAllowed', $data);
         }
 
-    }//end process()
-
+    }
 
 }//end class

@@ -1,8 +1,17 @@
 <?php
+/**
+ * Lge_Sniffs_Commenting_FunctionCommentSniff
+ *
+ * @author john
+ */
+
 if (class_exists('PEAR_Sniffs_Commenting_FunctionCommentSniff', true) === false) {
     throw new PHP_CodeSniffer_Exception('Class PEAR_Sniffs_Commenting_FunctionCommentSniff not found');
 }
 
+/**
+ * Class Lge_Sniffs_Commenting_FunctionCommentSniff
+ */
 class Lge_Sniffs_Commenting_FunctionCommentSniff extends PEAR_Sniffs_Commenting_FunctionCommentSniff
 {
 
@@ -13,18 +22,17 @@ class Lge_Sniffs_Commenting_FunctionCommentSniff extends PEAR_Sniffs_Commenting_
      */
     private $_phpVersion = null;
 
-
     /**
      * Process the return comment of this function comment.
      *
      * @param PHP_CodeSniffer_File $phpcsFile    The file being scanned.
-     * @param int                  $stackPtr     The position of the current token
+     * @param integer              $stackPtr     The position of the current token
      *                                           in the stack passed in $tokens.
-     * @param int                  $commentStart The position in the stack where the comment started.
+     * @param integer              $commentStart The position in the stack where the comment started.
      *
      * @return void
      */
-    protected function processReturn(PHP_CodeSniffer_File $phpcsFile, $stackPtr, $commentStart)
+    public function processReturn(PHP_CodeSniffer_File $phpcsFile, $stackPtr, $commentStart)
     {
         $tokens = $phpcsFile->getTokens();
 
@@ -146,20 +154,19 @@ class Lge_Sniffs_Commenting_FunctionCommentSniff extends PEAR_Sniffs_Commenting_
             $phpcsFile->addError($error, $tokens[$commentStart]['comment_closer'], 'MissingReturn');
         }//end if
 
-    }//end processReturn()
-
+    }
 
     /**
      * Process any throw tags that this function comment has.
      *
      * @param PHP_CodeSniffer_File $phpcsFile    The file being scanned.
-     * @param int                  $stackPtr     The position of the current token
+     * @param integer              $stackPtr     The position of the current token
      *                                           in the stack passed in $tokens.
-     * @param int                  $commentStart The position in the stack where the comment started.
+     * @param integer              $commentStart The position in the stack where the comment started.
      *
      * @return void
      */
-    protected function processThrows(PHP_CodeSniffer_File $phpcsFile, $stackPtr, $commentStart)
+    public function processThrows(PHP_CodeSniffer_File $phpcsFile, $stackPtr, $commentStart)
     {
         $tokens = $phpcsFile->getTokens();
 
@@ -215,20 +222,19 @@ class Lge_Sniffs_Commenting_FunctionCommentSniff extends PEAR_Sniffs_Commenting_
             }//end if
         }//end foreach
 
-    }//end processThrows()
-
+    }
 
     /**
      * Process the function parameter comments.
      *
      * @param PHP_CodeSniffer_File $phpcsFile    The file being scanned.
-     * @param int                  $stackPtr     The position of the current token
+     * @param integer              $stackPtr     The position of the current token
      *                                           in the stack passed in $tokens.
-     * @param int                  $commentStart The position in the stack where the comment started.
+     * @param integer              $commentStart The position in the stack where the comment started.
      *
      * @return void
      */
-    protected function processParams(PHP_CodeSniffer_File $phpcsFile, $stackPtr, $commentStart)
+    public function processParams(PHP_CodeSniffer_File $phpcsFile, $stackPtr, $commentStart)
     {
         if ($this->_phpVersion === null) {
             $this->_phpVersion = PHP_CodeSniffer::getConfigData('php_version');

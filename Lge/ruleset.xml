@@ -75,6 +75,9 @@
     <!-- =、=> 等操作符的前后都必须有一个空格 -->
     <rule ref="Squiz.WhiteSpace.OperatorSpacing"/>
 
+    <!-- 变量 -->
+    <rule ref="Lge.NamingConventions.ValidVariableName"/>
+
     <!-- 字符串 -->
     <!-- 不带任何变量转换的字符串必须使用单引号。 -->
     <!--rule ref="Lge.Strings.DoubleQuoteUsage"/-->
@@ -111,6 +114,7 @@
     <!-- 类的常量定义必须全部为大写，并用下划线分割每个单词，如：BRAND_DRAFT、BRAND_DELETED -->
     <rule ref="Generic.NamingConventions.UpperCaseConstantName"/>
 
+    <!-- 类方法 -->
     <!-- 扩展(extends)和实现(implements) -->
     <!-- 关键字 public,function,extends,implements以及类名只用一个空格隔开,不能用两个或两个以上的空格. -->
     <!-- 关键字 extends 和 implements 必须和类名在同一行 -->
@@ -127,7 +131,7 @@
     -->
     <rule ref="Lge.Classes.PropertyDeclaration"/>
 
-    <!-- 类方法 -->
+    <!-- 函数定义 -->
     <!--
         所有类方法都必须定义其可见性(public/protected/private)。
         方法名使用单一下划线开头来表示其 protected 和 private 的可见性。
@@ -136,7 +140,9 @@
     -->
     <rule ref="Squiz.Functions.MultiLineFunctionDeclaration"/>
     <rule ref="Squiz.Functions.FunctionDeclaration"/>
-    <!-- 类方法的参数 -->
+    <rule ref="Lge.NamingConventions.ValidFunctionName"/>
+
+    <!-- 函数参数 -->
     <!--
         在参数队列中，逗号之前不允许出现空格，逗号之后必须有一个空格。
         在方法的参数队列中定义带默认值的参数时，必须放到队列的末尾。

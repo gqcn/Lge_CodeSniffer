@@ -1,8 +1,15 @@
 <?php
+/**
+ * 类名称检测.
+ *
+ * @author john
+ */
 
+/**
+ * 类名称检测.
+ */
 class Lge_Sniffs_Classes_ValidClassNameSniff implements PHP_CodeSniffer_Sniff
 {
-
 
     /**
      * Returns an array of tokens this test wants to listen for.
@@ -16,14 +23,13 @@ class Lge_Sniffs_Classes_ValidClassNameSniff implements PHP_CodeSniffer_Sniff
                 T_INTERFACE,
                );
 
-    }//end register()
-
+    }
 
     /**
      * Processes this test, when one of its tokens is encountered.
      *
      * @param PHP_CodeSniffer_File $phpcsFile The current file being processed.
-     * @param int                  $stackPtr  The position of the current token in the
+     * @param integer              $stackPtr  The position of the current token in the
      *                                        stack passed in $tokens.
      *
      * @return void
@@ -48,7 +54,7 @@ class Lge_Sniffs_Classes_ValidClassNameSniff implements PHP_CodeSniffer_Sniff
         $name      = trim($phpcsFile->getTokensAsString($nameStart, ($nameEnd - $nameStart)));
 
         // Check for camel caps format.
-        $valid = PHP_CodeSniffer::isCamelCaps($name, true, true, false) || PHP_CodeSniffer::isUnderscoreName($name) ;
+        $valid = PHP_CodeSniffer::isCamelCaps($name, true, true, false) || PHP_CodeSniffer::isUnderscoreName($name);
         if ($valid === false) {
             $type  = ucfirst($tokens[$stackPtr]['content']);
             $error = '%s name "%s" is not in camel caps format';
@@ -59,10 +65,6 @@ class Lge_Sniffs_Classes_ValidClassNameSniff implements PHP_CodeSniffer_Sniff
             $phpcsFile->addError($error, $stackPtr, 'NotCamelCaps', $data);
         }
 
-    }//end process()
-
+    }
 
 }//end class
-
-
-?>
