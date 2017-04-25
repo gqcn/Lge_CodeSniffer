@@ -239,11 +239,11 @@ class Lge_Sniffs_Commenting_InlineCommentSniff implements PHP_CodeSniffer_Sniff
             return;
         }
 
+        /*
         if (preg_match('/^\p{Ll}/u', $commentText) === 1) {
             $error = 'Inline comments must start with a capital letter';
             $phpcsFile->addError($error, $topComment, 'NotCapital');
         }
-        /*
         // Only check the end of comment character if the start of the comment
         // is a letter, indicating that the comment is just standard text.
         if (preg_match('/^\p{L}/u', $commentText) === 1) {
