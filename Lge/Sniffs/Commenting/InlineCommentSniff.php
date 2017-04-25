@@ -238,7 +238,7 @@ class Lge_Sniffs_Commenting_InlineCommentSniff implements PHP_CodeSniffer_Sniff
             $error = 'Inline comments must start with a capital letter';
             $phpcsFile->addError($error, $topComment, 'NotCapital');
         }
-
+        /*
         // Only check the end of comment character if the start of the comment
         // is a letter, indicating that the comment is just standard text.
         if (preg_match('/^\p{L}/u', $commentText) === 1) {
@@ -261,7 +261,7 @@ class Lge_Sniffs_Commenting_InlineCommentSniff implements PHP_CodeSniffer_Sniff
                 $phpcsFile->addError($error, $stackPtr, 'InvalidEndChar', $data);
             }
         }
-
+        */
         // Finally, the line below the last comment cannot be empty if this inline
         // comment is on a line by itself.
         if ($tokens[$previousContent]['line'] < $tokens[$stackPtr]['line']) {
