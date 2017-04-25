@@ -56,14 +56,14 @@ class Lge_Sniffs_Commenting_ClassCommentSniff implements PHP_CodeSniffer_Sniff
             $error = 'There must be no blank lines after the class comment';
             $phpcsFile->addError($error, $commentEnd, 'SpacingAfter');
         }
-
+        /*
         $commentStart = $tokens[$commentEnd]['comment_opener'];
         foreach ($tokens[$commentStart]['comment_tags'] as $tag) {
             $error = '%s tag is not allowed in class comment';
             $data  = array($tokens[$tag]['content']);
             $phpcsFile->addWarning($error, $tag, 'TagNotAllowed', $data);
         }
-
+        */
     }
 
 }//end class
