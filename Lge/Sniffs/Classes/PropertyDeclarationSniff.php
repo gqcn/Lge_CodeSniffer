@@ -1,6 +1,7 @@
 <?php
 /**
  * Verifies that properties are declared correctly.
+ * @author john
  */
 
 if (class_exists('PHP_CodeSniffer_Standards_AbstractVariableSniff', true) === false) {
@@ -12,15 +13,16 @@ if (class_exists('PHP_CodeSniffer_Standards_AbstractVariableSniff', true) === fa
  */
 class Lge_Sniffs_Classes_PropertyDeclarationSniff extends PHP_CodeSniffer_Standards_AbstractVariableSniff
 {
+
     /**
      * Processes the function tokens within the class.
      *
      * @param PHP_CodeSniffer_File $phpcsFile The file where this token was found.
-     * @param int                  $stackPtr  The position where the token was found.
+     * @param integer              $stackPtr  The position where the token was found.
      *
      * @return void
      */
-    protected function processMemberVar(PHP_CodeSniffer_File $phpcsFile, $stackPtr)
+    public function processMemberVar(PHP_CodeSniffer_File $phpcsFile, $stackPtr)
     {
         $tokens = $phpcsFile->getTokens();
 
@@ -38,7 +40,7 @@ class Lge_Sniffs_Classes_PropertyDeclarationSniff extends PHP_CodeSniffer_Standa
             $phpcsFile->addError($error, $stackPtr, 'VarUsed');
         }
 
-        /**
+        /*
          * 变量名称下划线判断.
          */
         if ($tokens[$prev]['code'] === T_PUBLIC && $tokens[$stackPtr]['content'][1] === '_') {
@@ -65,37 +67,32 @@ class Lge_Sniffs_Classes_PropertyDeclarationSniff extends PHP_CodeSniffer_Standa
             $phpcsFile->addError($error, $stackPtr, 'ScopeMissing', $data);
         }
 
-    }//end processMemberVar()
-
+    }
 
     /**
      * Processes normal variables.
      *
      * @param PHP_CodeSniffer_File $phpcsFile The file where this token was found.
-     * @param int                  $stackPtr  The position where the token was found.
+     * @param integer              $stackPtr  The position where the token was found.
      *
      * @return void
      */
-    protected function processVariable(PHP_CodeSniffer_File $phpcsFile, $stackPtr)
+    public function processVariable(PHP_CodeSniffer_File $phpcsFile, $stackPtr)
     {
         // We don't care about normal variables.
-
-    }//end processVariable()
-
+    }
 
     /**
      * Processes variables in double quoted strings.
      *
      * @param PHP_CodeSniffer_File $phpcsFile The file where this token was found.
-     * @param int                  $stackPtr  The position where the token was found.
+     * @param integer              $stackPtr  The position where the token was found.
      *
      * @return void
      */
-    protected function processVariableInString(PHP_CodeSniffer_File $phpcsFile, $stackPtr)
+    public function processVariableInString(PHP_CodeSniffer_File $phpcsFile, $stackPtr)
     {
         // We don't care about normal variables.
-
-    }//end processVariableInString()
-
+    }
 
 }//end class

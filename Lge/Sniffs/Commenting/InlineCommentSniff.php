@@ -1,5 +1,12 @@
 <?php
+/**
+ * Lge_Sniffs_Commenting_InlineCommentSniff
+ * @author john
+ */
 
+/**
+ * Class Lge_Sniffs_Commenting_InlineCommentSniff
+ */
 class Lge_Sniffs_Commenting_InlineCommentSniff implements PHP_CodeSniffer_Sniff
 {
 
@@ -13,7 +20,6 @@ class Lge_Sniffs_Commenting_InlineCommentSniff implements PHP_CodeSniffer_Sniff
                                    'JS',
                                   );
 
-
     /**
      * Returns an array of tokens this test wants to listen for.
      *
@@ -26,14 +32,13 @@ class Lge_Sniffs_Commenting_InlineCommentSniff implements PHP_CodeSniffer_Sniff
                 T_DOC_COMMENT_OPEN_TAG,
                );
 
-    }//end register()
-
+    }
 
     /**
      * Processes this test, when one of its tokens is encountered.
      *
      * @param PHP_CodeSniffer_File $phpcsFile The file being scanned.
-     * @param int                  $stackPtr  The position of the current token in the
+     * @param integer              $stackPtr  The position of the current token in the
      *                                        stack passed in $tokens.
      *
      * @return void
@@ -172,14 +177,14 @@ class Lge_Sniffs_Commenting_InlineCommentSniff implements PHP_CodeSniffer_Sniff
                           $comment,
                          );
                 $fix   = $phpcsFile->addFixableError($error, $stackPtr, 'TabBefore', $data);
-            } else if ($spaceCount === 0) {
+            } elseif ($spaceCount === 0) {
                 $error = 'No space found before comment text; expected "// %s" but found "%s"';
                 $data  = array(
                           substr($comment, 2),
                           $comment,
                          );
                 $fix   = $phpcsFile->addFixableError($error, $stackPtr, 'NoSpaceBefore', $data);
-            } else if ($spaceCount > 1) {
+            } elseif ($spaceCount > 1) {
                 $error = 'Expected 1 space before comment text but found %s; use block comment if you need indentation';
                 $data  = array(
                           $spaceCount,
@@ -271,7 +276,7 @@ class Lge_Sniffs_Commenting_InlineCommentSniff implements PHP_CodeSniffer_Sniff
                     if ($tokens[$i]['code'] !== T_WHITESPACE) {
                         return;
                     }
-                } else if ($tokens[$i]['line'] > ($tokens[$stackPtr]['line'] + 1)) {
+                } elseif ($tokens[$i]['line'] > ($tokens[$stackPtr]['line'] + 1)) {
                     break;
                 }
             }
@@ -293,7 +298,6 @@ class Lge_Sniffs_Commenting_InlineCommentSniff implements PHP_CodeSniffer_Sniff
             }
         }//end if
 
-    }//end process()
-
+    }
 
 }//end class

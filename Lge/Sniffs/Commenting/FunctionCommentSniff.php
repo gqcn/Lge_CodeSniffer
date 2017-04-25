@@ -130,7 +130,7 @@ class Lge_Sniffs_Commenting_FunctionCommentSniff extends PEAR_Sniffs_Commenting_
                             }
                         }
                     }//end if
-                } else if ($returnType !== 'mixed' && in_array('void', $typeNames, true) === false) {
+                } elseif ($returnType !== 'mixed' && in_array('void', $typeNames, true) === false) {
                     // If return type is not void, there needs to be a return statement
                     // somewhere in the function that returns something.
                     if (isset($tokens[$stackPtr]['scope_closer']) === true) {
@@ -190,7 +190,7 @@ class Lge_Sniffs_Commenting_FunctionCommentSniff extends PEAR_Sniffs_Commenting_
             if ($exception === null) {
                 $error = 'Exception type and comment missing for @throws tag in function comment';
                 $phpcsFile->addError($error, $tag, 'InvalidThrows');
-            } else if ($comment === null) {
+            } elseif ($comment === null) {
                 $error = 'Comment missing for @throws tag in function comment';
                 $phpcsFile->addError($error, $tag, 'EmptyThrows');
             } else {
@@ -369,22 +369,22 @@ class Lge_Sniffs_Commenting_FunctionCommentSniff extends PEAR_Sniffs_Commenting_
                 $suggestedTypeHint = '';
                 if (strpos($suggestedName, 'array') !== false || substr($suggestedName, -2) === '[]') {
                     $suggestedTypeHint = 'array';
-                } else if (strpos($suggestedName, 'callable') !== false) {
+                } elseif (strpos($suggestedName, 'callable') !== false) {
                     $suggestedTypeHint = 'callable';
-                } else if (strpos($suggestedName, 'callback') !== false) {
+                } elseif (strpos($suggestedName, 'callback') !== false) {
                     $suggestedTypeHint = 'callable';
-                } else if (in_array($typeName, PHP_CodeSniffer::$allowedTypes) === false) {
+                } elseif (in_array($typeName, PHP_CodeSniffer::$allowedTypes) === false) {
                     $suggestedTypeHint = $suggestedName;
                 }
                 /*
-                else if ($this->_phpVersion >= 70000) {
+                elseif ($this->_phpVersion >= 70000) {
                     if ($typeName === 'string') {
                         $suggestedTypeHint = 'string';
-                    } else if ($typeName === 'int' || $typeName === 'integer') {
+                    } elseif ($typeName === 'int' || $typeName === 'integer') {
                         $suggestedTypeHint = 'int';
-                    } else if ($typeName === 'float') {
+                    } elseif ($typeName === 'float') {
                         $suggestedTypeHint = 'float';
-                    } else if ($typeName === 'bool' || $typeName === 'boolean') {
+                    } elseif ($typeName === 'bool' || $typeName === 'boolean') {
                         $suggestedTypeHint = 'bool';
                     }
                 }
@@ -409,7 +409,7 @@ class Lge_Sniffs_Commenting_FunctionCommentSniff extends PEAR_Sniffs_Commenting_
                         }
 
                         $phpcsFile->addError($error, $stackPtr, $errorCode, $data);
-                    } else if ($typeHint !== substr($suggestedTypeHint, (strlen($typeHint) * -1))) {
+                    } elseif ($typeHint !== substr($suggestedTypeHint, (strlen($typeHint) * -1))) {
                         $error = 'Expected type hint "%s"; found "%s" for %s';
                         $data  = array(
                                   $suggestedTypeHint,
@@ -418,7 +418,7 @@ class Lge_Sniffs_Commenting_FunctionCommentSniff extends PEAR_Sniffs_Commenting_
                                  );
                         $phpcsFile->addError($error, $stackPtr, 'IncorrectTypeHint', $data);
                     }//end if
-                } else if ($suggestedTypeHint === '' && isset($realParams[$pos]) === true) {
+                } elseif ($suggestedTypeHint === '' && isset($realParams[$pos]) === true) {
                     $typeHint = $realParams[$pos]['type_hint'];
                     if ($typeHint !== '') {
                         $error = 'Unknown type hint "%s" found for %s';
@@ -502,7 +502,7 @@ class Lge_Sniffs_Commenting_FunctionCommentSniff extends PEAR_Sniffs_Commenting_
 
                     $phpcsFile->addError($error, $param['tag'], $code, $data);
                 }
-            } else if (substr($param['var'], -4) !== ',...') {
+            } elseif (substr($param['var'], -4) !== ',...') {
                 // We must have an extra parameter comment.
                 $error = 'Superfluous parameter comment';
                 $phpcsFile->addError($error, $param['tag'], 'ExtraParamComment');
@@ -542,20 +542,19 @@ class Lge_Sniffs_Commenting_FunctionCommentSniff extends PEAR_Sniffs_Commenting_
             $phpcsFile->addError($error, $commentStart, 'MissingParamTag', $data);
         }
 
-    }//end processParams()
-
+    }
 
     /**
      * Check the spacing after the type of a parameter.
      *
      * @param PHP_CodeSniffer_File $phpcsFile The file being scanned.
      * @param array                $param     The parameter to be checked.
-     * @param int                  $maxType   The maxlength of the longest parameter type.
-     * @param int                  $spacing   The number of spaces to add after the type.
+     * @param integer              $maxType   The maxlength of the longest parameter type.
+     * @param integer              $spacing   The number of spaces to add after the type.
      *
      * @return void
      */
-    protected function checkSpacingAfterParamType(PHP_CodeSniffer_File $phpcsFile, $param, $maxType, $spacing = 1)
+    public function checkSpacingAfterParamType(PHP_CodeSniffer_File $phpcsFile, array $param, $maxType, $spacing = 1)
     {
         // Check number of spaces after the type.
         $spaces = ($maxType - strlen($param['type']) + $spacing);
@@ -597,20 +596,19 @@ class Lge_Sniffs_Commenting_FunctionCommentSniff extends PEAR_Sniffs_Commenting_
             }//end if
         }//end if
 
-    }//end checkSpacingAfterParamType()
-
+    }
 
     /**
      * Check the spacing after the name of a parameter.
      *
      * @param PHP_CodeSniffer_File $phpcsFile The file being scanned.
      * @param array                $param     The parameter to be checked.
-     * @param int                  $maxVar    The maxlength of the longest parameter name.
-     * @param int                  $spacing   The number of spaces to add after the type.
+     * @param integer              $maxVar    The maxlength of the longest parameter name.
+     * @param integer              $spacing   The number of spaces to add after the type.
      *
      * @return void
      */
-    protected function checkSpacingAfterParamName(PHP_CodeSniffer_File $phpcsFile, $param, $maxVar, $spacing = 1)
+    public function checkSpacingAfterParamName(PHP_CodeSniffer_File $phpcsFile, array $param, $maxVar, $spacing = 1)
     {
         // Check number of spaces after the var name.
         $spaces = ($maxVar - strlen($param['var']) + $spacing);
@@ -652,7 +650,6 @@ class Lge_Sniffs_Commenting_FunctionCommentSniff extends PEAR_Sniffs_Commenting_
             }//end if
         }//end if
 
-    }//end checkSpacingAfterParamName()
-
+    }
 
 }//end class

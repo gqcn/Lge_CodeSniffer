@@ -122,7 +122,7 @@ class Lge_Sniffs_Classes_ClassDeclarationSniff extends PSR2_Sniffs_Classes_Class
                 $error = 'Closing brace of a %s must be followed by a single blank line';
                 $data  = array($tokens[$stackPtr]['content']);
                 $phpcsFile->addError($error, $closeBrace, 'NoNewlineAfterCloseBrace', $data);
-            } else if ($nextLine !== ($braceLine + 2)) {
+            } elseif ($nextLine !== ($braceLine + 2)) {
                 $difference = ($nextLine - $braceLine - 1);
                 $error      = 'Closing brace of a %s must be followed by a single blank line; found %s';
                 $data       = array(

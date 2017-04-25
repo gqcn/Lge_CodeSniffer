@@ -1,13 +1,20 @@
 <?php
+/**
+ * Lge_Sniffs_Classes_ValidMethodNameSniff
+ * @author john
+ */
 
 if (class_exists('PHP_CodeSniffer_Standards_AbstractScopeSniff', true) === false) {
     throw new PHP_CodeSniffer_Exception('Class PHP_CodeSniffer_Standards_AbstractScopeSniff not found');
 }
 
+/**
+ * Class Lge_Sniffs_Classes_ValidMethodNameSniff
+ */
 class Lge_Sniffs_Classes_ValidMethodNameSniff extends PHP_CodeSniffer_Standards_AbstractScopeSniff
 {
 
-    protected $magicMethods = array(
+    public $magicMethods = array(
                                'construct',
                                'destruct',
                                'call',
@@ -25,23 +32,25 @@ class Lge_Sniffs_Classes_ValidMethodNameSniff extends PHP_CodeSniffer_Standards_
                                'call',
                               );
 
+    /**
+     * Lge_Sniffs_Classes_ValidMethodNameSniff constructor.
+     */
     public function __construct()
     {
         parent::__construct(array(T_CLASS, T_INTERFACE), array(T_FUNCTION));
 
-    }//end __construct()
-
+    }
 
     /**
      * Processes the function tokens within the class.
      *
      * @param PHP_CodeSniffer_File $phpcsFile The file where this token was found.
-     * @param int                  $stackPtr  The position where the token was found.
-     * @param int                  $currScope The current scope opener token.
+     * @param integer              $stackPtr  The position where the token was found.
+     * @param integer              $currScope The current scope opener token.
      *
      * @return void
      */
-    protected function processTokenWithinScope(PHP_CodeSniffer_File $phpcsFile, $stackPtr, $currScope)
+    public function processTokenWithinScope(PHP_CodeSniffer_File $phpcsFile, $stackPtr, $currScope)
     {
         $tokens = $phpcsFile->getTokens();
 
@@ -71,7 +80,7 @@ class Lge_Sniffs_Classes_ValidMethodNameSniff extends PHP_CodeSniffer_Standards_
             if ($methodName[0] == '_' && $tokens[$prev]['code'] == T_PUBLIC) {
                 $error = 'Method name with underscore prefix must be defined its scope using private or protected';
                 $phpcsFile->addError($error, $stackPtr, 'MethodScope');
-            } else if(in_array($tokens[$prev]['code'], array(T_PRIVATE, T_PROTECTED)) && $methodName[0] != '_') {
+            } elseif (in_array($tokens[$prev]['code'], array(T_PRIVATE, T_PROTECTED)) && $methodName[0] != '_') {
                 $error = 'Private or protected method must be defined its name with underscore prefix';
                 $phpcsFile->addError($error, $stackPtr, 'MethodScope');
             } else {
@@ -100,18 +109,18 @@ class Lge_Sniffs_Classes_ValidMethodNameSniff extends PHP_CodeSniffer_Standards_
         $prefix = $stackPtr;
         while (($prefix = $phpcsFile->findPrevious(PHP_CodeSniffer_Tokens::$methodPrefixes, ($prefix - 1), $prev)) !== false) {
             switch ($tokens[$prefix]['code']) {
-            case T_STATIC:
-                $static = $prefix;
-                break;
-            case T_ABSTRACT:
-                $abstract = $prefix;
-                break;
-            case T_FINAL:
-                $final = $prefix;
-                break;
-            default:
-                $visibility = $prefix;
-                break;
+                case T_STATIC:
+                    $static = $prefix;
+                    break;
+                case T_ABSTRACT:
+                    $abstract = $prefix;
+                    break;
+                case T_FINAL:
+                    $final = $prefix;
+                    break;
+                default:
+                    $visibility = $prefix;
+                    break;
             }
         }
 
@@ -130,7 +139,6 @@ class Lge_Sniffs_Classes_ValidMethodNameSniff extends PHP_CodeSniffer_Standards_
             $phpcsFile->addError($error, $abstract, 'AbstractAfterVisibility');
         }
 
-    }//end processTokenWithinScope()
+    }
 
-
-}//end class
+}

@@ -1,13 +1,20 @@
 <?php
+/**
+ * Lge_Sniffs_Commenting_FunctionCommentThrowTagSniff
+ *
+ * @author john
+ */
 
 if (class_exists('PHP_CodeSniffer_Standards_AbstractScopeSniff', true) === false) {
     $error = 'Class PHP_CodeSniffer_Standards_AbstractScopeSniff not found';
     throw new PHP_CodeSniffer_Exception($error);
 }
 
+/**
+ * Class Lge_Sniffs_Commenting_FunctionCommentThrowTagSniff
+ */
 class Lge_Sniffs_Commenting_FunctionCommentThrowTagSniff extends PHP_CodeSniffer_Standards_AbstractScopeSniff
 {
-
 
     /**
      * Constructs a Squiz_Sniffs_Commenting_FunctionCommentThrowTagSniff.
@@ -16,19 +23,18 @@ class Lge_Sniffs_Commenting_FunctionCommentThrowTagSniff extends PHP_CodeSniffer
     {
         parent::__construct(array(T_FUNCTION), array(T_THROW));
 
-    }//end __construct()
-
+    }
 
     /**
      * Processes the function tokens within the class.
      *
      * @param PHP_CodeSniffer_File $phpcsFile The file where this token was found.
-     * @param int                  $stackPtr  The position where the token was found.
-     * @param int                  $currScope The current scope opener token.
+     * @param integer              $stackPtr  The position where the token was found.
+     * @param integer              $currScope The current scope opener token.
      *
      * @return void
      */
-    protected function processTokenWithinScope(PHP_CodeSniffer_File $phpcsFile, $stackPtr, $currScope)
+    public function processTokenWithinScope(PHP_CodeSniffer_File $phpcsFile, $stackPtr, $currScope)
     {
         // Is this the first throw token within the current function scope?
         // If so, we have to validate other throw tokens within the same scope.
@@ -140,7 +146,7 @@ class Lge_Sniffs_Commenting_FunctionCommentThrowTagSniff extends PHP_CodeSniffer
             $error = 'Missing @throws tag in function comment';
             $phpcsFile->addError($error, $commentEnd, 'Missing');
             return;
-        } else if (empty($throwTokens) === true) {
+        } elseif (empty($throwTokens) === true) {
             // If token count is zero, it means that only variables are being
             // thrown, so we need at least one @throws tag (checked above).
             // Nothing more to do.
@@ -168,7 +174,6 @@ class Lge_Sniffs_Commenting_FunctionCommentThrowTagSniff extends PHP_CodeSniffer
             }
         }
 
-    }//end processTokenWithinScope()
-
+    }
 
 }//end class
