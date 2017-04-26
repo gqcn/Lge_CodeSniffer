@@ -85,10 +85,13 @@
     <rule ref="Generic.Strings.UnnecessaryStringConcat"/>
 
     <!-- 注释 -->
+    <!-- 每个函数/方法必须有文字描述 -->
+    <rule ref="Lge.Commenting.DocComment"/>
     <!-- 行尾注释和结束代码的分号之间至少有一个空格 -->
     <!-- 不允许试用#做为注释标记. -->
     <!-- 注释标记 // 或 # 之后必须有一个空格 -->
     <rule ref="Lge.Commenting.InlineComment"/>
+
 
     <!-- 命名空间(namespace)和 use 关键字的使用 -->
     <!-- 在 namespace 声明之后必须有一个空行 -->

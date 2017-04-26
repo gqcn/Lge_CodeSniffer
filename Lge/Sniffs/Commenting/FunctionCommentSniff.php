@@ -516,12 +516,13 @@ class Lge_Sniffs_Commenting_FunctionCommentSniff extends PEAR_Sniffs_Commenting_
             // Check number of spaces after the var name.
             $this->checkSpacingAfterParamName($phpcsFile, $param, $maxVar);
 
+            /*
             // Param comments must start with a capital letter and end with the full stop.
             if (preg_match('/^(\p{Ll}|\P{L})/u', $param['comment']) === 1) {
                 $error = 'Parameter comment must start with a capital letter';
                 $phpcsFile->addError($error, $param['tag'], 'ParamCommentNotCapital');
             }
-            /*
+
             $lastChar = substr($param['comment'], -1);
             if ($lastChar !== '.') {
                 $error = 'Parameter comment must end with a full stop';
