@@ -213,12 +213,13 @@ class Lge_Sniffs_Commenting_FunctionCommentSniff extends PEAR_Sniffs_Commenting_
                     $error = '@throws tag comment must start with a capital letter';
                     $phpcsFile->addError($error, ($tag + 2), 'ThrowsNotCapital');
                 }
-
+                /*
                 $lastChar = substr($comment, -1);
                 if ($lastChar !== '.') {
                     $error = '@throws tag comment must end with a full stop';
                     $phpcsFile->addError($error, ($tag + 2), 'ThrowsNoFullStop');
                 }
+                */
             }//end if
         }//end foreach
 
