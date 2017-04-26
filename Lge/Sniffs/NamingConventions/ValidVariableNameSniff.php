@@ -83,9 +83,11 @@ class Lge_Sniffs_NamingConventions_ValidVariableNameSniff extends PHP_CodeSniffe
                         $data  = array($originalVarName);
                         $phpcsFile->addError($error, $var, 'NotCamelCaps', $data);
                     } elseif (preg_match('|\d|', $objVarName) === 1) {
+                        /*
                         $warning = 'Variable "%s" contains numbers but this is discouraged';
                         $data    = array($originalVarName);
                         $phpcsFile->addWarning($warning, $stackPtr, 'ContainsNumbers', $data);
+                        */
                     }
                 }//end if
             }//end if
@@ -115,9 +117,11 @@ class Lge_Sniffs_NamingConventions_ValidVariableNameSniff extends PHP_CodeSniffe
             $data  = array($originalVarName);
             $phpcsFile->addError($error, $stackPtr, 'NotCamelCaps', $data);
         } elseif (preg_match('|\d|', $varName) === 1) {
+            /*
             $warning = 'Variable "%s" contains numbers but this is discouraged';
             $data    = array($originalVarName);
             $phpcsFile->addWarning($warning, $stackPtr, 'ContainsNumbers', $data);
+            */
         }
 
     }
@@ -164,9 +168,11 @@ class Lge_Sniffs_NamingConventions_ValidVariableNameSniff extends PHP_CodeSniffe
             $data  = array($varName);
             $phpcsFile->addError($error, $stackPtr, 'MemberVarNotCamelCaps', $data);
         } elseif (preg_match('|\d|', $varName) === 1) {
+            /*
             $warning = 'Member variable "%s" contains numbers but this is discouraged';
             $data    = array($varName);
             $phpcsFile->addWarning($warning, $stackPtr, 'MemberVarContainsNumbers', $data);
+            */
         }
 
     }
@@ -211,9 +217,11 @@ class Lge_Sniffs_NamingConventions_ValidVariableNameSniff extends PHP_CodeSniffe
                     $data  = array($varName);
                     $phpcsFile->addError($error, $stackPtr, 'StringVarNotCamelCaps', $data);
                 } elseif (preg_match('|\d|', $varName) === 1) {
+                    /*
                     $warning = 'Variable "%s" contains numbers but this is discouraged';
                     $data    = array($varName);
                     $phpcsFile->addWarning($warning, $stackPtr, 'StringVarContainsNumbers', $data);
+                    */
                 }
             }//end foreach
         }//end if
