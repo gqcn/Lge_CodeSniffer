@@ -59,7 +59,7 @@ class Lge_Sniffs_Classes_ValidMethodNameSniff extends PHP_CodeSniffer_Standards_
             // Ignore closures.
             return;
         }
-        /*
+
         if (preg_match('|^__|', $methodName) !== 0) {
             $magicPart = strtolower(substr($methodName, 2));
             if (in_array($magicPart, $this->magicMethods) === false) {
@@ -69,7 +69,7 @@ class Lge_Sniffs_Classes_ValidMethodNameSniff extends PHP_CodeSniffer_Standards_
 
             return;
         }
-        */
+
         $find   = PHP_CodeSniffer_Tokens::$scopeModifiers;
         $prev   = $phpcsFile->findPrevious($find, $stackPtr - 1, $stackPtr - 7, false);
         $public = false;
