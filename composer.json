@@ -1,0 +1,27 @@
+{
+    "name"       : "johng/lge-codesniffer",
+    "type"       : "library",
+    "description": "Custom coding standard base on php-codesniffer.",
+    "keywords": [
+        "lge",
+        "codesniffer",
+        "code-sniffer",
+        "php-code-sniffer"
+    ],
+    "homepage": "https://github.com/EngineQ/Lge_CodeSniffer",
+    "license" : "MIT",
+    "authors" : [
+    {
+        "name"    : "John Guo",
+        "email"   : "john@johng.cn",
+        "homepage": "http://johng.cn",
+        "role"    : "Developer"
+    }
+    ],
+    "require": {
+        "php": ">=5.0.0"
+    },
+    "autoload": {
+
+    }
+}
