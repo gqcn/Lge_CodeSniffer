@@ -104,7 +104,7 @@
     <!-- 类、类属性和类方法 -->
     <!-- 类、接口和特征的名称必须以大写开头，如：PartnerInfo、Partner_Info -->
     <rule ref="Lge.Classes.ValidClassName"/>
-    <rule ref="Squiz.Functions.LowercaseFunctionKeywords"/>
+    <rule ref="Lge.Functions.LowercaseFunctionKeywords"/>
     <!-- 类方法的名称和变量的名称定义必须由小写开头，如：getBrandName, queryAll, $lastSql、$sqlQueries -->
     <!-- 方法名使用单一下划线开头来表示其 protected 和 private 的可见性 -->
     <rule ref="Lge.Classes.ValidMethodName"/>
@@ -141,8 +141,8 @@
         类方法定义的名称后面不允许出现空格。开始大括号和方法名称必须在同一行，
         结束大括号必须在下一行或代码块结束后的下一行。在开始括号的后面和结束括号的前面都不允许出现空格。
     -->
-    <rule ref="Squiz.Functions.MultiLineFunctionDeclaration"/>
-    <rule ref="Squiz.Functions.FunctionDeclaration"/>
+    <rule ref="Lge.Functions.MultiLineFunctionDeclaration"/>
+    <rule ref="Lge.Functions.FunctionDeclaration"/>
     <rule ref="Lge.NamingConventions.ValidFunctionName"/>
 
     <!-- 函数参数 -->
@@ -153,7 +153,7 @@
         第一个参数必须被写到新的一行，并且每一行只能有一个参数。
         当参数队列被写到多行时，结束括号和开始大括号必须被写到一行，两者之间必须有一个空格。
     -->
-    <rule ref="Squiz.Functions.FunctionDeclarationArgumentSpacing">
+    <rule ref="Lge.Functions.FunctionDeclarationArgumentSpacing">
         <properties>
             <property name="equalsSpacing" value="1"/>
         </properties>
